@@ -18,7 +18,7 @@ app = Flask(__name__) # Starts Flask app
 
 @app.route("/") # Homepage
 def homepage():
-    return render_template("home.html")
+    return render_template("home.html", page_title="Home")
 
 if __name__ == "__main__":    # Starts App
     app.run(debug=True, host="0.0.0.0", port=5000)
