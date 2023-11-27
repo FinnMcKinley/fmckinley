@@ -9,25 +9,6 @@
     padding: 15px;
 }
 
-/* For Smaller Devices */
-@media only screen and (max-width: 768px) {
-    .header {
-        background: linear-gradient(90deg, #00C9FF 0%, #92FE9D 100%);
-        box-shadow: 0 1px 2px rgba(0,0,0,0.12), 0 1px 1px rgba(0,0,0,0.24);
-        color: #ffffff;
-        padding: 2px;
-        text-align: center;
-    }
-
-    .menu li {
-        padding: 4px;
-        margin-bottom: 5px;
-        background: linear-gradient(90deg, #00C9FF 0%, #92FE9D 100%);
-        color: #ffffff;
-        box-shadow: 0 1px 2px rgba(0,0,0,0.12), 0 1px 1px rgba(0,0,0,0.24);
-    }
-}
-
 /* For tablets: */
 @media only screen and (min-width: 600px) {
     .col-s-1 {width: 8.33%;}
@@ -46,22 +27,6 @@
 
 /* For desktop: */
 @media only screen and (min-width: 768px) {
-    .header {
-        background: linear-gradient(90deg, #00C9FF 0%, #92FE9D 100%);
-        box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-        color: #ffffff;
-        padding: 5px;
-        text-align: center;
-    }
-
-    .menu li {
-        padding: 8px;
-        margin-bottom: 20px;
-        background: linear-gradient(90deg, #00C9FF 0%, #92FE9D 100%);
-        color: #ffffff;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-    }
-
     /* Defines grid size */
     .col-1 {width: 8.33%;}
     .col-2 {width: 16.66%;}
@@ -88,20 +53,6 @@ html {
     font-family: "Lucida Sans", sans-serif;
 }
 
-.menu ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-}
-
-.menu li:hover {
-    background-color: #0099cc;
-}
-
-.menu li {
-    text-align: center;
-}
-
 a:link {
     text-decoration: none;
 }
@@ -109,4 +60,40 @@ a:link {
 img {
     width: 100%;
     height: auto;
+}
+
+
+/* Header Elements */
+.header {
+    background: linear-gradient(90deg, #00C9FF 0%, #92FE9D 100%);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    color: #ffffff;
+    padding: 5px;
+    text-align: center;
+}
+
+.header ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.header li:first-child {
+    float: left;
+}
+
+.header li {
+    float: right;
+}
+
+.header li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+} 
+
+.header li a:hover {
+    background: rgba(0,0,0,0.05);
 }
