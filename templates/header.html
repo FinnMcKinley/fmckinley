@@ -1,7 +1,22 @@
-<div class="header">
+<div class="header" id="myHeader">
     <ul>
         <li><a href="/">Home</a></li>
         <li><a href="/">Contact</a></li>
         <li><a href="/">Projects</a></li>
     </ul>
 </div>
+
+<script>
+    window.onscroll = function() {scrollLock()};
+
+    var header = document.getElementById("myHeader");
+    var sticky = header.offsetTop;
+
+    function scrollLock() {
+        if (window.pageYOffset > sticky) {
+        header.classList.add("sticky");
+        } else {
+        header.classList.remove("sticky");
+        }
+    }
+</script>
