@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% block content %}
+<style>
+    .pgrid-container {
+        display: grid;
+        grid-template-columns: auto;
+    }
+
+    .pgrid-item {
+        border: 2px solid #00C9FF;
+        background: rgb(245, 245, 245);
+        text-align: center;
+    }
+</style>
+
+<div class="pgrid-container">
+    <div class="pgrid-item">
+        <img src="">
+        <p>Mother Rock Jewellery</p>
+    </div>
+
+    <div class="pgrid-item">
+        <p>Twizel Basketball</p>
+    </div>
+
+    <div class="pgrid-item">
+        <p>Tic Tac Toe</p>
+    </div>
+</div>
+{% endblock %}
