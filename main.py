@@ -46,21 +46,6 @@ class Project(Base):
 db_url = "sqlite:///mydb.db" # Variable for database URL
 engine = create_engine(db_url, echo=True)
 
-def ses_add(item):
-    """ Adds item to session """
-    # Opens new session
-    Session = sessionmaker(bind=engine) 
-    session = Session()
-    try:
-        # Adds item to session
-        session.add(item)
-        session.commit()
-    except:
-        log(f"Error updating database: {item}")
-    finally:
-        log(f"Database updated: {item} added")
-
-
 # Creates the database or uses existing one
 if database_exists(db_url):
     log("Database exists")
@@ -119,10 +104,14 @@ else:
             "Source code for the stock game"
         )
 
-        ses_add(project1)
-        ses_add(project2)
-        ses_add(project3)
-        ses_add(project4)
+        # Commits items to database
+        session.add(project1)
+        session.add(project2)
+        session.add(project3)
+        session.add(project4)
+        session.commit()
+
+        # Logs success
         results = session.query(Project).all()
         log(f"Database contents: \n{results}")
     except:
