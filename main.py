@@ -46,6 +46,21 @@ class Project(Base):
 db_url = "sqlite:///mydb.db" # Variable for database URL
 engine = create_engine(db_url, echo=True)
 
+def ses_add(item):
+    """ Adds item to session """
+    # Opens new session
+    Session = sessionmaker(bind=engine) 
+    session = Session()
+    try:
+        # Adds item to session
+        session.add(item)
+        session.commit()
+    except:
+        log(f"Error updating database: {item}")
+    finally:
+        log(f"Database updated: {item} added")
+
+
 # Creates the database or uses existing one
 if database_exists(db_url):
     log("Database exists")
@@ -53,58 +68,68 @@ if database_exists(db_url):
         Base.metadata.create_all(bind=engine) # Creates a new database
         Session = sessionmaker(bind=engine) # Opens new session
         session = Session()
-        log("Database connection successful")
     except:
         log("Database connection failed")
+    finally:
+        log("Database connection successful")
 else: 
     log("Database does not exist, creating...")
     try:
         Base.metadata.create_all(bind=engine) # Creates a new database
         Session = sessionmaker(bind=engine) # Opens new session
         session = Session()
-        log("Database creation successful")
+
+        # Adding projects
+        project1 = Project(
+            1,
+            "Block Dropper",
+            "Incredibly simple physics simulation made in Unity game engine",
+            "BlockDropperImage.png",
+            "https://finn-mckinley.itch.io/block-dropper"
+            "Multi-coloured blocks falling and colliding together"
+        )
+        project2 = Project(
+            2,
+            "Password Generator",
+            "My first project in Python, before watching any tutorials. \
+            Randomly generates passwords, \
+            and saves them with login details in password.txt file",
+            "PasswordGeneratorImage.png",
+            "https://github.com/FinnMcKinley/Password-Generator",
+            "Source code for the password generator"
+        )
+
+        project3 = Project(
+            3,
+            "Mother Rocks Jewellery",
+            "My first website, made entirely using HTML and CSS. \
+            I made this website for school and got Excellence at Level 1 Digi Tech.",
+            "MotherRocksJewelleryImage.png",
+            "https://github.com/FinnMcKinley/Sarah-Henderson-Website",
+            "Homepage of Mother Rocks Jewellery Website"
+        )
+
+        project4 = Project(
+            4,
+            "Stock Game",
+            "Simple terminal based stock game I made in a day, \
+            while I was still very new to Python.",
+            "StockGameImage.png",
+            "https://github.com/FinnMcKinley/Stock-Game",
+            "Source code for the stock game"
+        )
+
+        ses_add(project1)
+        ses_add(project2)
+        ses_add(project3)
+        ses_add(project4)
+        results = session.query(Project).all()
+        log(f"Database contents: \n{results}")
     except:
         log("Database creation failed")
-
-    
-# Adding projects
-project1 = Project(
-    1,
-    "Block Dropper",
-    "Incredibly simple physics simulation made in Unity game engine",
-    "BlockDropperImage.png",
-    "https://finn-mckinley.itch.io/block-dropper"
-    "Multi-coloured blocks falling and colliding together"
-)
-project2 = Project(
-    2,
-    "Password Generator",
-    "My first project in Python, before watching any tutorials. \
-    Randomly generates passwords, \
-    and saves them with login details in password.txt file",
-    "PasswordGeneratorImage.png",
-    "https://github.com/FinnMcKinley/Password-Generator",
-    "Source code for the password generator"
-)
-
-project3 = Project(
-    3,
-    "Mother Rocks Jewellery",
-    "My first website, made entirely using HTML and CSS. \
-    I made this website for school and got Excellence at Level 1 Digital Technology.",
-    "MotherRocksJewelleryImage.png",
-    "https://github.com/FinnMcKinley/Sarah-Henderson-Website",
-    "Homepage of Mother Rocks Jewellery Website"
-)
-
-project4 = Project(
-    4,
-    "Stock Game",
-    "Simple terminal based stock game I made in a day while I was still very new to Python.",
-    "StockGameImage.png",
-    "https://github.com/FinnMcKinley/Stock-Game",
-    "Source code for the stock game"
-)
+    finally:
+        log("Database creation successful")
+        
 
 # # # # # # # # #
 # Flask Section #
@@ -120,7 +145,6 @@ def homepage():
 # Projects page
 @app.route("/projects")
 def projects():
-    projects = [project1, project2, project3, project4]
 
     # Redirects to project gallery
     return render_template("projects.html", page_title="Projects", projects=projects)
