@@ -39,12 +39,30 @@ class Project(Base):
         self.alt_text = alt_text
 
     def __repr__ (self):
-        return f"<Project {self.id}>"
+        return f"<Project {self.id}: {self.name}>"
 
 
 # Database Creation
 db_url = "sqlite:///mydb.db" # Variable for database URL
 engine = create_engine(db_url, echo=True)
+
+def ses_add(item):
+    """ 
+        Adds item to session 
+        
+        Please do not use for multiple items to avoid overloading server
+    """
+    # Opens new session
+    Session = sessionmaker(bind=engine) 
+    session = Session()
+    try:
+        # Adds item to session
+        session.add(item)
+        session.commit()
+    except:
+        log(f"Error updating database: {item}")
+    finally:
+        log(f"Database updated: {item} added")
 
 # Creates the database or uses existing one
 if database_exists(db_url):
@@ -70,7 +88,7 @@ else:
             "Block Dropper",
             "Incredibly simple physics simulation made in Unity game engine",
             "BlockDropperImage.png",
-            "https://finn-mckinley.itch.io/block-dropper"
+            "https://finn-mckinley.itch.io/block-dropper",
             "Multi-coloured blocks falling and colliding together"
         )
         project2 = Project(
@@ -134,7 +152,13 @@ def homepage():
 # Projects page
 @app.route("/projects")
 def projects():
+    # Opens new session
+    Session = sessionmaker(bind=engine)
+    session = Session()
 
+    # Collects projects
+    projects = session.query(Project).all()
+    
     # Redirects to project gallery
     return render_template("projects.html", page_title="Projects", projects=projects)
     

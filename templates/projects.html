@@ -92,13 +92,16 @@ body {
 
     {# Card for every project #}
     {% for i in projects %}
-    <div class="card">
-        <div class="photo">
-            <img src="static/projects/{{i.image}}" alt="{{i.name}}">
+    <a href={{i.url}}>
+        <div class="card">
+            <div class="photo">
+                <img src="static/projects/{{i.image}}" alt="{{i.name}}">
+            </div>
+
+            <h1>{{ i.name }}</h1>
         </div>
-        
-        <h1>{{ i.name }}</h1>
-    </div>
+    </a>
+    
     {% endfor %}
     
 </div>
